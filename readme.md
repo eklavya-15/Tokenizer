@@ -98,6 +98,8 @@ Converts token IDs back to text.
   "text": "Hello"
 }
 ```
+<img width="2836" height="1572" alt="image" src="https://github.com/user-attachments/assets/71c116ec-7f55-42c3-b042-b46384c30680" />
+
 
 ## How It Works
 
@@ -132,5 +134,6 @@ Converts token IDs back to text.
 This project is open source and available under the MIT License.
 
 ## Contributing
+
 
 Feel free to submit issues and enhancement requests!
