@@ -18,7 +18,9 @@ export default function handler(req, res) {
 
     let text = '';
     for (const tokenId of tokens) {
-      const char = Object.keys(vocab).find(key => vocab[key] === tokenId);
+      // Reverse the transformation: (tokenId - 9) / 10 to get original vocab token ID
+      const originalTokenId = (tokenId - 9) / 10;
+      const char = Object.keys(vocab).find(key => vocab[key] === originalTokenId);
       if (!char) {
         return res.status(500).json({ error: `Token ID ${tokenId} not found in vocabulary` });
       }

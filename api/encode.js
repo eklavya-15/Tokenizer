@@ -22,7 +22,8 @@ export default function handler(req, res) {
       if (tokenId === undefined) {
         return res.status(500).json({ error: `Character "${char}" not found in vocabulary` });
       }
-      tokens.push(tokenId);
+      // Apply the same transformation as the original server: tokenId*10 + 9
+      tokens.push(tokenId * 10 + 9);
     }
 
     res.json({ tokens });

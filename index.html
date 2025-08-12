@@ -147,6 +147,10 @@
     <button id="toggleVocab" onclick="toggleVocab()" style="background-color: #007acc; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Show Vocabulary</button>
     
     <div id="vocabSection" style="display: none; margin-top: 20px;">
+      <p style="color: #666; font-size: 14px;">
+        Showing alphabets (A-Z, a-z), numbers (0-9), and common special characters.<br>
+        <strong>Note:</strong> Token IDs shown are transformed (original_id × 10 + 9) as used by the encoder.
+      </p>
       <div id="vocabTable" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; margin-top: 10px;">
         Loading vocabulary...
       </div>

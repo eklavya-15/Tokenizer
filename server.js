@@ -23,7 +23,7 @@ const decoder = (tokenId) => {
     return char;
 };
 
-app.post('/encode', (req, res) => {
+app.post('/api/encode', (req, res) => {
     const {text} = req.body;
     const arr = [];
     if (!text) {
@@ -41,7 +41,7 @@ app.post('/encode', (req, res) => {
     res.json({tokens:arr});
 });
 
-app.post('/decode', (req, res) => {
+app.post('/api/decode', (req, res) => {
     const { tokens } = req.body;
     if (!tokens || !Array.isArray(tokens)) {
         return res.status(400).json({ error: 'Tokens array is required' });
