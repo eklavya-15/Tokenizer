@@ -57,7 +57,7 @@
       if (!text.trim()) return alert("Please enter text to encode.");
       
       try {
-        const res = await fetch("/encode", {
+        const res = await fetch("/api/encode", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text })
@@ -76,7 +76,7 @@
       const tokens = raw.split(/[\s,]+/).map(n => parseInt(n)).filter(n => !isNaN(n));
       
       try {
-        const res = await fetch("/decode", {
+        const res = await fetch("/api/decode", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ tokens })
