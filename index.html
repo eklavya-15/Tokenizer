@@ -87,6 +87,71 @@
         document.getElementById("decodeResult").textContent = "Error decoding: " + err;
       }
     }
+
+    // Toggle vocabulary display
+    function toggleVocab() {
+      const vocabSection = document.getElementById("vocabSection");
+      const toggleButton = document.getElementById("toggleVocab");
+      
+      if (vocabSection.style.display === "none") {
+        vocabSection.style.display = "block";
+        toggleButton.textContent = "Hide Vocabulary";
+        loadVocabulary();
+      } else {
+        vocabSection.style.display = "none";
+        toggleButton.textContent = "Show Vocabulary";
+      }
+    }
+
+    // Load and display vocabulary
+    async function loadVocabulary() {
+      try {
+        const response = await fetch('/vocab.json');
+        const vocab = await response.json();
+        
+        // Filter for alphabets, numbers, and common special characters
+        const filteredVocab = {};
+        for (const [char, tokenId] of Object.entries(vocab)) {
+          // Include alphabets, numbers, space, and common punctuation
+          if (/^[a-zA-Z0-9 .,!?;:'"()\-_@#$%&*+=/\\<>[\]{}|~`]$/.test(char)) {
+            filteredVocab[char] = tokenId;
+          }
+        }
+        
+        // Sort by token ID
+        const sortedEntries = Object.entries(filteredVocab).sort((a, b) => a[1] - b[1]);
+        
+        let vocabHTML = '<table style="width: 100%; border-collapse: collapse;">';
+        vocabHTML += '<tr style="background-color: #e0e0e0;"><th style="border: 1px solid #ccc; padding: 8px;">Character</th><th style="border: 1px solid #ccc; padding: 8px;">Token ID</th></tr>';
+        
+        for (const [char, tokenId] of sortedEntries) {
+          const displayChar = char === ' ' ? '&nbsp;(space)' : char;
+          vocabHTML += `<tr>
+            <td style="border: 1px solid #ccc; padding: 8px; text-align: center; font-family: monospace; font-size: 16px;">${displayChar}</td>
+            <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${tokenId*10 + 9}</td>
+          </tr>`;
+        }
+        
+        vocabHTML += '</table>';
+        document.getElementById("vocabTable").innerHTML = vocabHTML;
+        
+      } catch (error) {
+        document.getElementById("vocabTable").innerHTML = `<p style="color: red;">Error loading vocabulary: ${error.message}</p>`;
+      }
+    }
   </script>
+
+  <!-- Vocabulary Section -->
+  <div style="margin-top: 40px; border-top: 2px solid #ddd; padding-top: 20px;">
+    <h2>Token Vocabulary</h2>
+    <button id="toggleVocab" onclick="toggleVocab()" style="background-color: #007acc; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Show Vocabulary</button>
+    
+    <div id="vocabSection" style="display: none; margin-top: 20px;">
+      <div id="vocabTable" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; margin-top: 10px;">
+        Loading vocabulary...
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
